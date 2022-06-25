@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 
 const dungeonSchema = new mongoose.Schema(
   {
@@ -37,6 +36,6 @@ const dungeonSchema = new mongoose.Schema(
   },
 );
 
-const Dungeon = mainConnection.model('Dungeon', dungeonSchema);
+const Dungeon = mongoose.model('Dungeon', dungeonSchema);
 
 module.exports = Dungeon;

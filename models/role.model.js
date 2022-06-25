@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 const attributesSchema = require('./subdocuments/attributes.schema');
 
 /**
@@ -74,6 +73,6 @@ roleSchema.virtual('inventory', {
   localField: '_id',
 });
 
-const Role = mainConnection.model('Role', roleSchema);
+const Role = mongoose.model('Role', roleSchema);
 
 module.exports = Role;

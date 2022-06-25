@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 const coinSchema = require('./subdocuments/coin.schema');
 
 const keySchema = new mongoose.Schema({
@@ -44,6 +43,6 @@ const taskManualSchema = new mongoose.Schema(
   },
 );
 
-const TaskManual = mainConnection.model('TaskManual', taskManualSchema);
+const TaskManual = mongoose.model('TaskManual', taskManualSchema);
 
 module.exports = TaskManual;

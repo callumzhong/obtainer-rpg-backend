@@ -3,8 +3,6 @@ const {
 } = process.env;
 const mongoose = require('mongoose');
 
-const DATA_BASE = mongoose.createConnection(
+mongoose.connect(
   `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}/${MONGO_DB_NAME}?retryWrites=true&w=majority`,
 );
-
-module.exports = DATA_BASE;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 
 const notionSchema = new mongoose.Schema({
   key: {
@@ -31,15 +30,11 @@ const taskSchema = new mongoose.Schema(
     taskManual: {
       type: mongoose.Types.ObjectId,
       ref: 'taskManual',
-      required: [() => this.type === 'TASK_MANUAL',
-        '請輸入任務手冊',
-      ],
+      required: [() => this.type === 'TASK_MANUAL', '請輸入任務手冊'],
     },
     notion: {
       type: notionSchema,
-      required: [() => this.type === 'NOTION',
-        '請輸入 notion 任務資訊',
-      ],
+      required: [() => this.type === 'NOTION', '請輸入 notion 任務資訊'],
     },
     consumedMinutePoint: {
       type: Number,
@@ -60,6 +55,6 @@ taskSchema.virtual('inventory', {
   localField: '_id',
 });
 
-const Role = mainConnection.model('Role', taskSchema);
+const Role = mongoose.model('Role', taskSchema);
 
 module.exports = Role;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 
 const userSchema = new mongoose.Schema(
   {
@@ -8,6 +7,7 @@ const userSchema = new mongoose.Schema(
       required: [true, '請輸入帳號'],
       maxLength: 12,
       minLength: 4,
+      unique: true,
     },
     passwordHash: {
       type: String,
@@ -36,6 +36,6 @@ const userSchema = new mongoose.Schema(
   },
 );
 
-const User = mainConnection.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 
 const inventorySchema = new mongoose.Schema(
   {
@@ -11,18 +10,12 @@ const inventorySchema = new mongoose.Schema(
     prop: {
       type: mongoose.Types.ObjectId,
       ref: 'prop',
-      required: [
-        () => !this.material,
-        '請輸入道具 || 素材',
-      ],
+      required: [() => !this.material, '請輸入道具 || 素材'],
     },
     material: {
       type: mongoose.Types.ObjectId,
       ref: 'material',
-      required: [
-        () => !this.prop,
-        '請輸入道具 || 素材',
-      ],
+      required: [() => !this.prop, '請輸入道具 || 素材'],
     },
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
@@ -33,6 +26,6 @@ const inventorySchema = new mongoose.Schema(
   },
 );
 
-const Inventory = mainConnection.model('Inventory', inventorySchema);
+const Inventory = mongoose.model('Inventory', inventorySchema);
 
 module.exports = Inventory;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 
 const materialSchema = new mongoose.Schema(
   {
@@ -28,6 +27,6 @@ const materialSchema = new mongoose.Schema(
   },
 );
 
-const Material = mainConnection.model('Material', materialSchema);
+const Material = mongoose.model('Material', materialSchema);
 
 module.exports = Material;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 const effectSchema = require('./subdocuments/effect.schema');
 
 const propSchema = new mongoose.Schema(
@@ -39,6 +38,6 @@ const propSchema = new mongoose.Schema(
   },
 );
 
-const Inventory = mainConnection.model('Inventory', propSchema);
+const Inventory = mongoose.model('Inventory', propSchema);
 
 module.exports = Inventory;

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const mainConnection = require('../connections/main.connection');
 const coinSchema = require('./subdocuments/coin.schema');
 
 const monsterSchema = new mongoose.Schema(
@@ -43,6 +42,6 @@ const monsterSchema = new mongoose.Schema(
   },
 );
 
-const Monster = mainConnection.model('Monster', monsterSchema);
+const Monster = mongoose.model('Monster', monsterSchema);
 
 module.exports = Monster;
