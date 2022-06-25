@@ -17,6 +17,10 @@ const isAuth = catchAsync(async (req, res, next) => {
   // 驗證 token 正確性
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   const currentUser = await userService.getOne(decoded.id);
+  console.log(currentUser);
+  if (!currentUser) {
+    throw new AppError(400, '查無用戶');
+  }
   req.user = currentUser;
   next();
 });

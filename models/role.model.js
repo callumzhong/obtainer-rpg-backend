@@ -18,11 +18,17 @@ const experienceSchema = new mongoose.Schema({
 
 const roleSchema = new mongoose.Schema(
   {
+    user: {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+      required: [true, '請輸入用戶'],
+    },
     name: {
       type: String,
       required: [true, '請輸入名稱'],
       maxLength: 8,
       minLength: 2,
+      unique: true,
     },
     url: {
       type: String,
@@ -34,15 +40,7 @@ const roleSchema = new mongoose.Schema(
     },
     experience: {
       type: experienceSchema,
-      default: () => {},
-    },
-    currentExperience: {
-      type: Number,
-      default: 0,
-    },
-    requiredExperience: {
-      type: Number,
-      default: 50,
+      default: () => ({}),
     },
     attributes: {
       type: attributesSchema,

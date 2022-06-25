@@ -3,6 +3,7 @@ const AppError = require('./appError');
 const translateKeys = {
   account: '帳號',
   email: '電子郵件',
+  name: '名稱',
 };
 
 const checkForDuplication = async (Model, searchQuery) => {

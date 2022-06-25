@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
 const checkForDuplication = require('../helpers/checkForDublication');
+const AppError = require('../helpers/appError');
 
 const generateSendJWT = (user) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -25,11 +26,11 @@ const signUp = async ({ account, password, email }) => {
 const signIn = async ({ account, password }) => {
   const user = await User.findOne({ account }).select('+passwordHash');
   if (!user) {
-    return '用戶不存在';
+    throw new AppError(400, '用戶不存在');
   }
   const auth = await bcrypt.compare(password, user.passwordHash);
   if (!auth) {
-    return '密碼不正確';
+    throw new AppError(400, '密碼不正確');
   }
   const createdToken = generateSendJWT(user);
   return createdToken;

@@ -46,6 +46,11 @@ router.get('/profile', isAuth, userController.getProfile);
  * @summary 登入
  * @tags user
  * @param {signIn} request.body.required
+ * @example request
+{
+  "account":"qq123",
+  "password": "12345678"
+}
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
@@ -56,6 +61,13 @@ router.post('/sign_in', validator(userValidation.signIn), userController.signIn)
  * @summary 註冊
  * @tags user
  * @param {signUp} request.body.required
+ * @example request
+{
+  "account":"qq123",
+  "email": "qq123@123.com",
+  "password": "12345678",
+  "confirmPassword":"12345678"
+}
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
