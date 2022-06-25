@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
+const checkForDuplication = require('../helpers/checkForDublication');
 
 const generateSendJWT = (user) => {
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -9,10 +10,9 @@ const generateSendJWT = (user) => {
   return { token };
 };
 
-const signUp = async ({
-  account, password, email,
-}) => {
+const signUp = async ({ account, password, email }) => {
   const hashed = await bcrypt.hash(password, 12);
+  await checkForDuplication(User, [{ account }, { email }]);
   const user = await User.create({
     account,
     passwordHash: hashed,

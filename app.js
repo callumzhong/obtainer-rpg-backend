@@ -1,4 +1,12 @@
+/* eslint-disable global-require */
 require('dotenv').config();
+
+if (process.env.NODE_ENV !== 'test') {
+  require('./connections/main.connection');
+} else {
+  require('./connections/test.connection');
+}
+
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
@@ -11,11 +19,13 @@ const indexRouter = require('./routes/index');
 const app = express();
 expressJSDocSwagger(app)(swaggerOptions);
 
-process.on('uncaughtException', (err) => {
-  console.error('Uncaughted Exception！');
-  console.error(err);
-  process.exit(1);
-});
+if (process.env.NODE_ENV === 'dev') {
+  process.on('uncaughtException', (err) => {
+    console.error('Uncaughted Exception！');
+    console.error(err);
+    process.exit(1);
+  });
+}
 
 app.use(cors());
 app.use(logger('dev'));
