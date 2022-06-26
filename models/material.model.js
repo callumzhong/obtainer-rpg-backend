@@ -6,6 +6,10 @@ const materialSchema = new mongoose.Schema(
       type: String,
       enum: ['ORE', 'METAL', 'WOOD'],
     },
+    rarity: {
+      type: String,
+      enum: ['WHITE', 'GREEN', 'BLUE', 'PURPLE', 'ORANGE'],
+    },
     name: {
       type: String,
       required: [true, '請輸入名稱'],
