@@ -39,7 +39,7 @@ const getAll = async (userId) => {
 };
 
 const getOne = async (roleId) => {
-  const role = await Role.findById(roleId).lean();
+  const role = await Role.findById(roleId).lean().populate('inventory');
   return role;
 };
 
