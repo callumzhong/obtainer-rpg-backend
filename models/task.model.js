@@ -1,13 +1,6 @@
 const mongoose = require('mongoose');
 
-const notionSchema = new mongoose.Schema({
-  key: {
-    type: String,
-    required: [true, '請輸入 key'],
-  },
-  title: {
-    type: String,
-  },
+const keySchema = new mongoose.Schema({
   prop: {
     type: mongoose.Types.ObjectId,
     ref: 'prop',
@@ -18,43 +11,28 @@ const notionSchema = new mongoose.Schema({
     required: [true, '請輸入有效分鐘數'],
   },
 });
+
 const taskSchema = new mongoose.Schema(
   {
-    memo: {
+    title: {
       type: String,
+      required: [true, '請輸入任務標題'],
     },
-    type: {
+    description: {
       type: String,
-      enum: ['NOTION', 'TASK_MANUAL'],
+      required: [true, '請輸入任務描述'],
     },
-    taskManual: {
-      type: mongoose.Types.ObjectId,
-      ref: 'taskManual',
-      required: [() => this.type === 'TASK_MANUAL', '請輸入任務手冊'],
-    },
-    notion: {
-      type: notionSchema,
-      required: [() => this.type === 'NOTION', '請輸入 notion 任務資訊'],
-    },
-    consumedMinutePoint: {
-      type: Number,
-      required: [true, '請輸入已消耗分鐘數'],
-    },
+    key: keySchema,
+    deletedAt: { type: Date, select: false },
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
   },
   {
-    versionKey: false,
     timestamps: true,
+    versionKey: false,
   },
 );
 
-taskSchema.virtual('inventory', {
-  ref: 'inventory',
-  foreignField: 'role',
-  localField: '_id',
-});
+const Task = mongoose.model('Task', taskSchema);
 
-const Role = mongoose.model('Role', taskSchema);
-
-module.exports = Role;
+module.exports = Task;

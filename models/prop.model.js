@@ -10,6 +10,7 @@ const propSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, '請輸入名字'],
+      maxLength: 20,
     },
     url: {
       type: String,
@@ -38,6 +39,6 @@ const propSchema = new mongoose.Schema(
   },
 );
 
-const Inventory = mongoose.model('Inventory', propSchema);
+const Prop = mongoose.model('Prop', propSchema);
 
-module.exports = Inventory;
+module.exports = Prop;
