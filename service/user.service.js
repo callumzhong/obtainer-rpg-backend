@@ -11,6 +11,14 @@ const generateSendJWT = (user) => {
   return { token };
 };
 
+const getOne = async (id) => {
+  const user = await User.findById(id).select('+email').lean();
+  if (!user) {
+    throw new AppError(400, '用戶不存在');
+  }
+  return user;
+};
+
 const signUp = async ({ account, password, email }) => {
   const hashed = await bcrypt.hash(password, 12);
   await checkForDuplication(User, [{ account }, { email }]);
@@ -51,12 +59,11 @@ const updateProfile = async ({ userId, email }) => {
     update.email = email;
   }
   const user = await User.findByIdAndUpdate(userId, update);
-  return user;
-};
-
-const getOne = async (id) => {
-  const user = await User.findById(id).select('+email').lean();
-  return user;
+  if (!user) {
+    throw new AppError(400, '用戶不存在');
+  }
+  const updatedUser = await getOne(userId);
+  return updatedUser;
 };
 
 module.exports = {
