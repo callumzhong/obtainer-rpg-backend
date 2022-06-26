@@ -10,16 +10,38 @@ const create = {
     effect: Joi.object({
       str: Joi.number(),
     }),
-  }),
+  }).required(),
 };
 
 const getOne = {
   params: Joi.object({
     id: validations.JoiObjectId().required(),
-  }),
+  }).required(),
+};
+
+const updatePropFormula = {
+  params: Joi.object({
+    id: validations.JoiObjectId().required(),
+  }).required(),
+  body: Joi.array()
+    .items(
+      Joi.object({
+        material: validations.JoiObjectId().required(),
+        amount: Joi.number().required(),
+      }),
+    )
+    .required(),
+};
+
+const deletePropFormula = {
+  params: Joi.object({
+    id: validations.JoiObjectId().required(),
+  }).required(),
 };
 
 module.exports = {
   create,
   getOne,
+  updatePropFormula,
+  deletePropFormula,
 };

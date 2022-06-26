@@ -26,7 +26,6 @@ const propSchema = new mongoose.Schema(
         material: { type: mongoose.Types.ObjectId, ref: 'material' },
         amount: {
           type: Number,
-          default: 1,
         },
       },
     ],

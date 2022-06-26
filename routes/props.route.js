@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * GET /api/props
- * @summary 新增道具
+ * @summary 取得全部道具
  * @security apiKeyAuth
  * @tags props
  * @return {object} 200 - success response - application/json
