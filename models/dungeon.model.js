@@ -14,16 +14,24 @@ const dungeonSchema = new mongoose.Schema(
       type: String,
       required: [true, '請輸入圖檔'],
     },
-    initialPoint: {
+    pointByX: {
       type: String,
-      required: [true, '請輸入角色初始點'],
+      required: [true, '請輸入角色 X 軸'],
+    },
+    pointByY: {
+      type: String,
+      required: [true, '請輸入角色 Y 軸'],
     },
     monsters: [
       {
         monster: { type: mongoose.Types.ObjectId, ref: 'monster' },
-        initialPoint: {
+        pointByX: {
           type: String,
-          required: [true, '請輸入怪物初始點'],
+          required: [true, '請輸入怪物 X 軸'],
+        },
+        pointByY: {
+          type: String,
+          required: [true, '請輸入怪物 Y 軸'],
         },
       },
     ],

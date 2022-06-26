@@ -12,18 +12,18 @@ const router = express.Router();
  */
 
 /**
+ * @typedef {object} updateFormula
+ * @property {string} material
+ * @property {number} amount
+ */
+
+/**
  * @typedef {object} createProp
  * @property {string} type
  * @property {string} name
  * @property {string} url
  * @property {string} description
  * @property {effect} effect
- */
-
-/**
- * @typedef {object} updateFormula
- * @property {string} material
- * @property {number} amount
  */
 
 /**

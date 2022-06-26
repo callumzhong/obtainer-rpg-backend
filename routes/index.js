@@ -9,6 +9,8 @@ const questsRoute = require('./quests.route');
 const materialRoute = require('./material.route');
 const monsterRoute = require('./monster.route');
 const monstersRoute = require('./monsters.route');
+const dungeonRoute = require('./dungeon.route');
+const dungeonsRoute = require('./dungeons.route');
 
 const router = express.Router();
 router.use('/user', userRoute);
@@ -21,5 +23,7 @@ router.use('/quests', questsRoute);
 router.use('/material', materialRoute);
 router.use('/monster', monsterRoute);
 router.use('/monsters', monstersRoute);
+router.use('/dungeon', dungeonRoute);
+router.use('/dungeons', dungeonsRoute);
 
 module.exports = router;
