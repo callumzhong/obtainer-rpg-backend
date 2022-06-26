@@ -1,7 +1,9 @@
 const Quest = require('../models/quest.model');
 const AppError = require('../helpers/appError');
 
-const create = async ({ userId, title, description, type, prop, role, minutePoint, notion }) => {
+const create = async ({
+  userId, title, description, type, prop, role, minutePoint, notion,
+}) => {
   const model = {
     user: userId,
     role,
@@ -26,7 +28,7 @@ const create = async ({ userId, title, description, type, prop, role, minutePoin
 const deleteOne = async (questId) => {
   const quest = await Quest.findByIdAndDelete(questId);
   if (!quest) {
-    throw new AppError(400, '查無任務無法刪除');
+    throw new AppError(400, '探索不存在');
   }
   return quest;
 };
@@ -38,6 +40,9 @@ const getAll = async (roleId) => {
 
 const getOne = async (questId) => {
   const quest = await Quest.findById(questId).lean();
+  if (!quest) {
+    throw new AppError(400, '探索不存在');
+  }
   return quest;
 };
 

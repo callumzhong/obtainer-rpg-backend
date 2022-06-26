@@ -13,25 +13,25 @@ const create = {
       key: Joi.string(),
       initialMinutePoint: Joi.number(),
     }),
-  }),
+  }).required(),
 };
 
 const deleteOne = {
   params: Joi.object({
     id: validations.JoiObjectId().required(),
-  }),
+  }).required(),
 };
 
 const getAll = {
   query: Joi.object({
     role: validations.JoiObjectId().required(),
-  }),
+  }).required(),
 };
 
 const getOne = {
   params: Joi.object({
     id: validations.JoiObjectId().required(),
-  }),
+  }).required(),
 };
 
 module.exports = {
