@@ -7,6 +7,8 @@ const propsRoute = require('./props.route');
 const questRoute = require('./quest.route');
 const questsRoute = require('./quests.route');
 const materialRoute = require('./material.route');
+const monsterRoute = require('./monster.route');
+const monstersRoute = require('./monsters.route');
 
 const router = express.Router();
 router.use('/user', userRoute);
@@ -17,5 +19,7 @@ router.use('/props', propsRoute);
 router.use('/quest', questRoute);
 router.use('/quests', questsRoute);
 router.use('/material', materialRoute);
+router.use('/monster', monsterRoute);
+router.use('/monsters', monstersRoute);
 
 module.exports = router;
