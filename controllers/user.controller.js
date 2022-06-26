@@ -29,7 +29,8 @@ const updatePassword = catchAsync(async (req, res) => {
 
 const updateProfile = catchAsync(async (req, res) => {
   const { email } = req.body;
-  const user = userService.updateProfile({ userId: req.user.id, email });
+  let user = await userService.updateProfile({ userId: req.user.id, email });
+  user = await userService.getOne(user.id);
   res.status(200).json(user);
 });
 

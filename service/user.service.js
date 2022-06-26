@@ -55,7 +55,7 @@ const updateProfile = async ({ userId, email }) => {
 };
 
 const getOne = async (id) => {
-  const user = await User.findById(id).select('+email');
+  const user = await User.findById(id).select('+email').lean();
   return user;
 };
 
