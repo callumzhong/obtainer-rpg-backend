@@ -19,7 +19,7 @@ const create = async ({ userId, name, url }) => {
 const deleteOne = async (roleId) => {
   const role = await Role.findByIdAndDelete(roleId);
   if (!role) {
-    throw new AppError(400, '查無角色');
+    throw new AppError(400, '角色不存在');
   }
   return role;
 };
@@ -28,7 +28,7 @@ const updatedName = async ({ roleId, name }) => {
   await checkForDuplication(Role, [{ name }]);
   const role = await Role.findByIdAndUpdate(roleId, { name });
   if (!role) {
-    throw new AppError(400, '查無角色');
+    throw new AppError(400, '角色不存在');
   }
   return role;
 };

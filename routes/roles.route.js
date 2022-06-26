@@ -6,7 +6,7 @@ const router = express.Router();
 
 /**
  * GET /api/roles
- * @summary 取得所有角色
+ * @summary 取得全部角色
  * @tags roles
  * @security apiKeyAuth
  * @return {object} 200 - success response - application/json
