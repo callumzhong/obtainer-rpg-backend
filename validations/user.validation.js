@@ -11,7 +11,7 @@ const signUp = {
 
 const signIn = {
   body: Joi.object({
-    account: Joi.string().required(),
+    account: Joi.string().min(4).max(12).required(),
     password: Joi.string().min(8).required(),
   }).required(),
 };
