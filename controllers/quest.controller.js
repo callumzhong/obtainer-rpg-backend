@@ -6,7 +6,7 @@ const create = catchAsync(async (req, res) => {
     title, description, type, minutePoint, notion, propId, roleId,
   } = req.body;
   const model = {
-    userId: req.user.id,
+    userId: req.user._id.toString(),
     title,
     description,
     type,

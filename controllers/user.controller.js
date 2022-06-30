@@ -20,7 +20,7 @@ const signIn = catchAsync(async (req, res) => {
 const updatePassword = catchAsync(async (req, res) => {
   const { password } = req.body;
   const result = await userService.updatePassword({
-    userId: req.user.id,
+    userId: req.user._id.toString(),
     password,
   });
 
@@ -29,12 +29,19 @@ const updatePassword = catchAsync(async (req, res) => {
 
 const updateProfile = catchAsync(async (req, res) => {
   const { email } = req.body;
-  const user = await userService.updateProfile({ userId: req.user.id, email });
+  const user = await userService.updateProfile({
+    userId: req.user._id.toString(),
+    email,
+  });
   res.status(200).json(user);
 });
 
 const getProfile = catchAsync(async (req, res) => {
   res.status(200).json(req.user);
+});
+
+const checkAuth = catchAsync(async (req, res) => {
+  res.status(200).send('已授權');
 });
 
 module.exports = {
@@ -43,4 +50,5 @@ module.exports = {
   updateProfile,
   updatePassword,
   getProfile,
+  checkAuth,
 };

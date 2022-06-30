@@ -42,6 +42,16 @@ const router = express.Router();
 router.get('/profile', isAuth, userController.getProfile);
 
 /**
+ * GET /api/user/check_auth
+ * @summary 驗證權限
+ * @tags user
+ * @security apiKeyAuth
+ * @return {object} 200 - success response - text/plain
+ * @return {object} 400 - Bad request response
+ */
+router.get('/check_auth', isAuth, userController.checkAuth);
+
+/**
  * POST /api/user/sign_in
  * @summary 登入
  * @tags user
@@ -54,7 +64,11 @@ router.get('/profile', isAuth, userController.getProfile);
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.post('/sign_in', validator(userValidation.signIn), userController.signIn);
+router.post(
+  '/sign_in',
+  validator(userValidation.signIn),
+  userController.signIn,
+);
 
 /**
  * POST /api/user/sign_up
@@ -71,7 +85,11 @@ router.post('/sign_in', validator(userValidation.signIn), userController.signIn)
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.post('/sign_up', validator(userValidation.signUp), userController.signUp);
+router.post(
+  '/sign_up',
+  validator(userValidation.signUp),
+  userController.signUp,
+);
 
 /**
  * PATCH /api/user/profile

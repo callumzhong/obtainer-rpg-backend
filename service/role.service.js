@@ -2,7 +2,9 @@ const Role = require('../models/role.model');
 const checkForDuplication = require('../helpers/checkForDublication');
 const AppError = require('../helpers/appError');
 
-const create = async ({ userId, name, url }) => {
+const create = async ({
+  userId, name, url, attributes,
+}) => {
   const isMax = (await Role.find({ user: userId }).count()) >= 3;
   if (isMax) {
     throw new AppError(400, '角色欄位不足');
@@ -12,6 +14,7 @@ const create = async ({ userId, name, url }) => {
     user: userId,
     name,
     url,
+    attributes,
   });
   return role;
 };

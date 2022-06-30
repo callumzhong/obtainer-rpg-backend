@@ -44,9 +44,7 @@ const roleSchema = new mongoose.Schema(
     },
     attributes: {
       type: attributesSchema,
-      default: () => ({
-        str: 5,
-      }),
+      required: [true, '請輸入屬性'],
     },
     coin: {
       type: Number,

@@ -2,17 +2,18 @@ const catchAsync = require('../helpers/catchAsync');
 const roleService = require('../service/role.service');
 
 const create = catchAsync(async (req, res) => {
-  const { name, url } = req.body;
+  const { name, url, attributes } = req.body;
   const role = await roleService.create({
-    userId: req.user.id,
+    userId: req.user._id.toString(),
     name,
     url,
+    attributes,
   });
   res.status(200).json(role);
 });
 
 const getAll = catchAsync(async (req, res) => {
-  const role = await roleService.getAll(req.user.id);
+  const role = await roleService.getAll(req.user._id.toString());
   res.status(200).json(role);
 });
 

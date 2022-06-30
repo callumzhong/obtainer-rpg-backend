@@ -7,9 +7,17 @@ const isAuth = require('../middlewares/isAuth');
 const router = express.Router();
 
 /**
+ * @typedef {object} attributes
+ * @property {number} str.required
+ * @property {number} crit.required
+ * @property {number} speed.required
+ */
+
+/**
  * @typedef {object} createRole
  * @property {string} name.required
  * @property {string} url.required
+ * @property {attributes} attributes.required
  */
 
 /**
@@ -26,7 +34,12 @@ const router = express.Router();
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.post('/', isAuth, validator(roleValidation.create), roleController.create);
+router.post(
+  '/',
+  isAuth,
+  validator(roleValidation.create),
+  roleController.create,
+);
 
 /**
  * DELETE /api/role/{id}
@@ -37,7 +50,12 @@ router.post('/', isAuth, validator(roleValidation.create), roleController.create
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.delete('/:id', isAuth, validator(roleValidation.deleteOne), roleController.deleteOne);
+router.delete(
+  '/:id',
+  isAuth,
+  validator(roleValidation.deleteOne),
+  roleController.deleteOne,
+);
 
 /**
  * PATCH /api/role/{id}
@@ -49,6 +67,11 @@ router.delete('/:id', isAuth, validator(roleValidation.deleteOne), roleControlle
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.patch('/:id', isAuth, validator(roleValidation.updatedName), roleController.updatedName);
+router.patch(
+  '/:id',
+  isAuth,
+  validator(roleValidation.updatedName),
+  roleController.updatedName,
+);
 
 module.exports = router;
