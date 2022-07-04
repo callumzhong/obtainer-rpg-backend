@@ -12,8 +12,8 @@ const create = catchAsync(async (req, res) => {
   res.status(200).json(role);
 });
 
-const getAll = catchAsync(async (req, res) => {
-  const role = await roleService.getAll(req.user._id.toString());
+const getOne = catchAsync(async (req, res) => {
+  const role = await roleService.getOne(req.user._id.toString());
   res.status(200).json(role);
 });
 
@@ -36,7 +36,7 @@ const updatedName = catchAsync(async (req, res) => {
 
 module.exports = {
   create,
-  getAll,
+  getOne,
   deleteOne,
   updatedName,
 };

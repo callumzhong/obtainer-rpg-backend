@@ -26,6 +26,16 @@ const router = express.Router();
  */
 
 /**
+ * GET /api/role
+ * @summary 取得角色
+ * @tags role
+ * @security apiKeyAuth
+ * @return {object} 200 - success response - application/json
+ * @return {object} 400 - Bad request response
+ */
+router.get('/', isAuth, roleController.getOne);
+
+/**
  * POST /api/role
  * @summary 新增角色
  * @tags role

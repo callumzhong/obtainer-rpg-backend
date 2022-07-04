@@ -36,19 +36,21 @@ const updatedName = async ({ roleId, name }) => {
   return role;
 };
 
-const getAll = async (userId) => {
-  const role = await Role.find({ user: userId }).lean();
+// 暫時只開放玩家只能建立一個角色
+const getOne = async (userId) => {
+  const role = await Role.findOne({ user: userId })
+    .lean()
+    .populate('inventory');
   return role;
 };
 
-const getOne = async (roleId) => {
-  const role = await Role.findById(roleId).lean().populate('inventory');
-  return role;
-};
+// const getOne = async () => {
+//   const role = await Role.findById().lean().populate('inventory');
+//   return role;
+// };
 
 module.exports = {
   create,
-  getAll,
   deleteOne,
   updatedName,
   getOne,
