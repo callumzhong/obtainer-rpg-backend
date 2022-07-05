@@ -38,9 +38,10 @@ const updatedName = async ({ roleId, name }) => {
 
 // 暫時只開放玩家只能建立一個角色
 const getOne = async (userId) => {
-  const role = await Role.findOne({ user: userId })
-    .lean()
-    .populate('inventory');
+  const role = await Role.findOne({ user: userId });
+  if (!role) {
+    throw new AppError(400, '角色不存在');
+  }
   return role;
 };
 

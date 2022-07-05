@@ -3,7 +3,7 @@ const questService = require('../service/quest.service');
 
 const create = catchAsync(async (req, res) => {
   const {
-    title, description, type, minutePoint, notion, propId, roleId,
+    title, description, type, expectedMinutePoint, notionKey, roleId,
   } = req.body;
   const model = {
     userId: req.user._id.toString(),
@@ -11,9 +11,8 @@ const create = catchAsync(async (req, res) => {
     description,
     type,
     role: roleId,
-    prop: propId,
-    minutePoint,
-    notion,
+    expectedMinutePoint,
+    notionKey,
   };
   const quest = await questService.create(model);
   res.status(200).json(quest);

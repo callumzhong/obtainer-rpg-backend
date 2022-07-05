@@ -7,12 +7,8 @@ const create = {
     description: Joi.string().required(),
     type: Joi.string().valid('NOTION', 'PRIVATE').required(),
     roleId: validations.JoiObjectId().required(),
-    propId: validations.JoiObjectId().required(),
-    minutePoint: Joi.number().required(),
-    notion: Joi.object({
-      key: Joi.string(),
-      initialMinutePoint: Joi.number(),
-    }),
+    expectedMinutePoint: Joi.number().required(),
+    notionKey: Joi.string(),
   }).required(),
 };
 

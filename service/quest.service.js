@@ -2,7 +2,13 @@ const Quest = require('../models/quest.model');
 const AppError = require('../helpers/appError');
 
 const create = async ({
-  userId, title, description, type, prop, role, minutePoint, notion,
+  userId,
+  title,
+  description,
+  type,
+  role,
+  expectedMinutePoint,
+  notionKey,
 }) => {
   const model = {
     user: userId,
@@ -10,16 +16,10 @@ const create = async ({
     type,
     title,
     description,
-    key: {
-      prop,
-      minutePoint,
-    },
+    expectedMinutePoint,
   };
   if (model.type === 'NOTION') {
-    model.notion = {
-      key: notion.key,
-      initialMinutePoint: notion.initialMinutePoint,
-    };
+    model.notionKey = notionKey;
   }
   const quest = await Quest.create(model);
   return quest;

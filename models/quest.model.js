@@ -1,16 +1,4 @@
 const mongoose = require('mongoose');
-const dungeonKeySchema = require('./subdocuments/dungeonKey.schema');
-
-const notionSchema = new mongoose.Schema({
-  key: {
-    type: String,
-    required: [true, '請輸入 key'],
-  },
-  initialMinutePoint: {
-    type: Number,
-    default: 0,
-  },
-});
 
 const questSchema = new mongoose.Schema(
   {
@@ -23,9 +11,9 @@ const questSchema = new mongoose.Schema(
       type: String,
       enum: ['NOTION', 'PRIVATE'],
     },
-    notion: {
-      type: notionSchema,
-      required: [() => this.type === 'NOTION', '請輸入 notion 任務資訊'],
+    notionKey: {
+      type: String,
+      required: [() => this.type === 'NOTION', '請輸入 notion key'],
     },
     title: {
       type: String,
@@ -35,9 +23,9 @@ const questSchema = new mongoose.Schema(
       type: String,
       required: [true, '請輸入任務描述'],
     },
-    key: {
-      type: dungeonKeySchema,
-      required: [true, '請輸入鑰匙'],
+    expectedMinutePoint: {
+      type: Number,
+      required: [true, '請輸入預期時數(分)'],
     },
     consumedMinutePoint: {
       type: Number,
