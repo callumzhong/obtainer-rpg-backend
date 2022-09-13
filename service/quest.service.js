@@ -4,18 +4,16 @@ const AppError = require('../helpers/appError');
 const create = async ({
   userId,
   title,
-  description,
   type,
-  role,
+  character,
   expectedMinutePoint,
   notionKey,
 }) => {
   const model = {
     user: userId,
-    role,
+    character,
     type,
     title,
-    description,
     expectedMinutePoint,
   };
   if (model.type === 'NOTION') {
@@ -33,8 +31,10 @@ const deleteOne = async (questId) => {
   return quest;
 };
 
-const getAll = async (roleId) => {
-  const quests = await Quest.find({ role: roleId }).lean();
+const getAll = async (characterId) => {
+  const quests = await Quest.find({
+    character: characterId,
+  }).lean();
   return quests;
 };
 
@@ -46,9 +46,23 @@ const getOne = async (questId) => {
   return quest;
 };
 
+const updatedConsumed = async ({
+  questId,
+  consumedMinutePoint,
+}) => {
+  const quest = await Quest.findByIdAndUpdate(questId, {
+    consumedMinutePoint,
+  });
+  if (!quest) {
+    throw new AppError(400, '探索不存在');
+  }
+  return quest;
+};
+
 module.exports = {
   create,
   getAll,
   deleteOne,
   getOne,
+  updatedConsumed,
 };

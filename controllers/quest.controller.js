@@ -3,14 +3,17 @@ const questService = require('../service/quest.service');
 
 const create = catchAsync(async (req, res) => {
   const {
-    title, description, type, expectedMinutePoint, notionKey, roleId,
+    title,
+    type,
+    expectedMinutePoint,
+    notionKey,
+    characterId,
   } = req.body;
   const model = {
     userId: req.user._id.toString(),
     title,
-    description,
     type,
-    role: roleId,
+    character: characterId,
     expectedMinutePoint,
     notionKey,
   };
@@ -25,9 +28,19 @@ const deleteOne = catchAsync(async (req, res) => {
 });
 
 const getAll = catchAsync(async (req, res) => {
-  const { role } = req.query;
-  const quests = await questService.getAll(role);
+  const { character } = req.query;
+  const quests = await questService.getAll(character);
   res.status(200).json(quests);
+});
+
+const updatedConsumed = catchAsync(async (req, res) => {
+  const { id } = req.params;
+  const { consumedMinutePoint } = req.body;
+  await questService.updatedConsumed({
+    questId: id,
+    consumedMinutePoint,
+  });
+  res.status(200).json();
 });
 
 const getOne = catchAsync(async (req, res) => {
@@ -41,4 +54,5 @@ module.exports = {
   getAll,
   deleteOne,
   getOne,
+  updatedConsumed,
 };

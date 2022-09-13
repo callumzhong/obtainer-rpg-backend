@@ -1,18 +1,23 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
-const checkForDuplication = require('../helpers/checkForDublication');
+const checkForDuplication = require('../helpers/checkForDuplication');
 const AppError = require('../helpers/appError');
 
 const generateSendJWT = (user) => {
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_DAY,
-  });
+  const token = jwt.sign(
+    { _id: user._id },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: process.env.JWT_EXPIRES_DAY,
+    },
+  );
   return { token };
 };
 
-const getOne = async (id) => {
-  const user = await User.findById(id).select('+email').lean();
+const getOne = async (_id) => {
+  const user = await User.findById(_id).lean();
+
   if (!user) {
     throw new AppError(400, '用戶不存在');
   }
@@ -21,22 +26,34 @@ const getOne = async (id) => {
 
 const signUp = async ({ account, password, email }) => {
   const hashed = await bcrypt.hash(password, 12);
-  await checkForDuplication(User, [{ account }, { email }]);
-  const user = await User.create({
+  const check = [{ account }];
+  if (email) {
+    check.push({ email });
+  }
+  await checkForDuplication(User, check);
+  const create = {
     account,
     passwordHash: hashed,
-    email,
-  });
+  };
+  if (email) {
+    create.email = email;
+  }
+  const user = await User.create(create);
   const createdToken = generateSendJWT(user);
   return createdToken;
 };
 
 const signIn = async ({ account, password }) => {
-  const user = await User.findOne({ account }).select('+passwordHash');
+  const user = await User.findOne({ account }).select(
+    '+passwordHash',
+  );
   if (!user) {
     throw new AppError(400, '用戶不存在');
   }
-  const auth = await bcrypt.compare(password, user.passwordHash);
+  const auth = await bcrypt.compare(
+    password,
+    user.passwordHash,
+  );
   if (!auth) {
     throw new AppError(400, '密碼不正確');
   }

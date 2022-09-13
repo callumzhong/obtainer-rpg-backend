@@ -16,6 +16,11 @@ const router = express.Router();
  */
 
 /**
+ * @typedef {object} collectMaterial
+ * @property {string} type
+ */
+
+/**
  * POST /api/material
  * @summary 新增素材
  * @security apiKeyAuth
@@ -24,7 +29,28 @@ const router = express.Router();
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.post('/', isAuth, validator(materialValidation.create), materialController.create);
+router.post(
+  '/',
+  isAuth,
+  validator(materialValidation.create),
+  materialController.create,
+);
+
+/**
+ * POST /api/material/collect
+ * @summary 採集素材
+ * @security apiKeyAuth
+ * @tags material
+ * @param {collectMaterial} request.body.required
+ * @return {object} 200 - success response - application/json
+ * @return {object} 400 - Bad request response
+ */
+router.post(
+  '/collect',
+  isAuth,
+  validator(materialValidation.collectOne),
+  materialController.collectOne,
+);
 
 /**
  * GET /api/material/{id}
@@ -35,7 +61,12 @@ router.post('/', isAuth, validator(materialValidation.create), materialControlle
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.get('/:id', isAuth, validator(materialValidation.getOne), materialController.getOne);
+router.get(
+  '/:id',
+  isAuth,
+  validator(materialValidation.getOne),
+  materialController.getOne,
+);
 
 /**
  * DELETE /api/material/{id}

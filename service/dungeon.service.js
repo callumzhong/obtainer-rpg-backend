@@ -2,7 +2,12 @@ const AppError = require('../helpers/appError');
 const Dungeon = require('../models/dungeon.model');
 
 const create = async ({
-  name, description, url, pointByX, pointByY, monsters,
+  name,
+  description,
+  url,
+  pointByX,
+  pointByY,
+  monsters,
 }) => {
   const model = {
     name,
@@ -34,7 +39,9 @@ const getOne = async (dungeonId) => {
 };
 
 const deleteOne = async (dungeonId) => {
-  const dungeon = await Dungeon.findByIdAndDelete(dungeonId).lean();
+  const dungeon = await Dungeon.findByIdAndDelete(
+    dungeonId,
+  ).lean();
   if (!dungeon) {
     throw new AppError(400, '地牢不存在');
   }

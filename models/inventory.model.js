@@ -2,21 +2,32 @@ const mongoose = require('mongoose');
 
 const inventorySchema = new mongoose.Schema(
   {
-    role: {
+    character: {
       type: mongoose.Types.ObjectId,
-      ref: 'role',
+      ref: 'character',
       required: [true, '請輸入角色ID'],
     },
     prop: {
       type: mongoose.Types.ObjectId,
       ref: 'prop',
-      required: [() => !this.material, '請輸入道具 || 素材'],
+      required: [
+        function () {
+          return !this.material;
+        },
+        '請輸入道具 || 素材',
+      ],
     },
     material: {
       type: mongoose.Types.ObjectId,
       ref: 'material',
-      required: [() => !this.prop, '請輸入道具 || 素材'],
+      required: [
+        function () {
+          return !this.prop;
+        },
+        '請輸入道具 || 素材',
+      ],
     },
+    amount: { type: Number },
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
   },
@@ -26,6 +37,9 @@ const inventorySchema = new mongoose.Schema(
   },
 );
 
-const Inventory = mongoose.model('Inventory', inventorySchema);
+const Inventory = mongoose.model(
+  'Inventory',
+  inventorySchema,
+);
 
 module.exports = Inventory;

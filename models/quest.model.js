@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const questSchema = new mongoose.Schema(
   {
-    role: {
+    character: {
       type: mongoose.Types.ObjectId,
-      ref: 'role',
-      required: [true, '請輸入角色'],
+      ref: 'character',
+      required: [true, '請輸入人物'],
     },
     type: {
       type: String,
@@ -13,15 +13,16 @@ const questSchema = new mongoose.Schema(
     },
     notionKey: {
       type: String,
-      required: [() => this.type === 'NOTION', '請輸入 notion key'],
+      required: [
+        function () {
+          return this.type === 'NOTION';
+        },
+        '請輸入 notion key',
+      ],
     },
     title: {
       type: String,
       required: [true, '請輸入任務標題'],
-    },
-    description: {
-      type: String,
-      required: [true, '請輸入任務描述'],
     },
     expectedMinutePoint: {
       type: Number,

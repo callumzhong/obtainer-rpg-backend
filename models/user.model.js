@@ -16,15 +16,15 @@ const userSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: [true, '請填寫email'],
       unique: true,
       lowercase: true,
       select: false,
+      required: [true, '請輸入 Email'],
     },
-    roles: [
+    characters: [
       {
         type: mongoose.Types.ObjectId,
-        ref: 'role',
+        ref: 'character',
       },
     ],
     createdAt: { type: Date, select: false },

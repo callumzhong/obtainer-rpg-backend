@@ -1,4 +1,5 @@
 const materialService = require('../service/material.service');
+const characterService = require('../service/character.service');
 const catchAsync = require('../helpers/catchAsync');
 
 const getAll = catchAsync(async (req, res) => {
@@ -32,9 +33,22 @@ const create = catchAsync(async (req, res) => {
   res.status(201).json(material);
 });
 
+const collectOne = catchAsync(async (req, res) => {
+  const { type } = req.body;
+  const character = await characterService.getOne(
+    req.user._id.toString(),
+  );
+  const collected = await materialService.collectOne({
+    characterId: character._id.toString(),
+    type,
+  });
+  res.status(201).json(collected);
+});
+
 module.exports = {
   create,
   getAll,
   getOne,
   deleteOne,
+  collectOne,
 };

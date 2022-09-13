@@ -14,7 +14,10 @@ const checkForDuplication = async (Model, searchQuery) => {
   searchQuery.forEach((singleObject) => {
     const key = Object.keys(singleObject)[0];
     if (result[key] === singleObject[key]) {
-      throw new AppError(400, `${translateKeys[key]}已存在`);
+      throw new AppError(
+        400,
+        `${translateKeys[key]}已存在`,
+      );
     }
   });
 };

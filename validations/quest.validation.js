@@ -4,9 +4,10 @@ const validations = require('../helpers/validations');
 const create = {
   body: Joi.object({
     title: Joi.string().required(),
-    description: Joi.string().required(),
-    type: Joi.string().valid('NOTION', 'PRIVATE').required(),
-    roleId: validations.JoiObjectId().required(),
+    type: Joi.string()
+      .valid('NOTION', 'PRIVATE')
+      .required(),
+    characterId: validations.JoiObjectId().required(),
     expectedMinutePoint: Joi.number().required(),
     notionKey: Joi.string(),
   }).required(),
@@ -20,7 +21,7 @@ const deleteOne = {
 
 const getAll = {
   query: Joi.object({
-    role: validations.JoiObjectId().required(),
+    character: validations.JoiObjectId().required(),
   }).required(),
 };
 
@@ -30,9 +31,19 @@ const getOne = {
   }).required(),
 };
 
+const updatedConsumed = {
+  params: Joi.object({
+    id: validations.JoiObjectId().required(),
+  }).required(),
+  body: Joi.object({
+    consumedMinutePoint: Joi.number().required(),
+  }).required(),
+};
+
 module.exports = {
   create,
   getOne,
   getAll,
   deleteOne,
+  updatedConsumed,
 };

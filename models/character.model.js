@@ -16,7 +16,7 @@ const experienceSchema = new mongoose.Schema({
   },
 });
 
-const roleSchema = new mongoose.Schema(
+const characterSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Types.ObjectId,
@@ -63,12 +63,12 @@ const roleSchema = new mongoose.Schema(
   },
 );
 
-roleSchema.virtual('inventory', {
+characterSchema.virtual('inventory', {
   ref: 'inventory',
-  foreignField: 'role',
+  foreignField: 'character',
   localField: '_id',
 });
 
-const Role = mongoose.model('Role', roleSchema);
+const Character = mongoose.model('Character', characterSchema);
 
-module.exports = Role;
+module.exports = Character;

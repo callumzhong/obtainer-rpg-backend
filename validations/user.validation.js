@@ -4,7 +4,9 @@ const signUp = {
   body: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(8).required(),
-    confirmPassword: Joi.string().required().valid(Joi.ref('password')),
+    confirmPassword: Joi.string()
+      .required()
+      .valid(Joi.ref('password')),
     account: Joi.string().min(4).max(12).required(),
   }).required(),
 };
@@ -19,7 +21,9 @@ const signIn = {
 const updatePassword = {
   body: Joi.object({
     password: Joi.string().min(8).required(),
-    confirmPassword: Joi.string().required().valid(Joi.ref('password')),
+    confirmPassword: Joi.string()
+      .required()
+      .valid(Joi.ref('password')),
   }).required(),
 };
 

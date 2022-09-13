@@ -17,10 +17,15 @@ const router = express.Router();
  * @property {string} title
  * @property {string} description
  * @property {string} type
- * @property {string} roleId
+ * @property {string} characterId
  * @property {string} propId
- * @property {number} minutePoint
+ * @property {number} expectedMinutePoint
  * @property {notion} notion
+ */
+
+/**
+ * @typedef {object} updatedConsumed
+ * @property {number} consumedMinutePoint
  */
 
 /**
@@ -32,18 +37,45 @@ const router = express.Router();
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.post('/', isAuth, validator(questValidation.create), questController.create);
+router.post(
+  '/',
+  isAuth,
+  validator(questValidation.create),
+  questController.create,
+);
 
 /**
  * GET /api/quest/{id}
  * @summary 取得探索
  * @tags quest
  * @security apiKeyAuth
- * @param {string} id.path.required - propId
+ * @param {string} id.path.required - questId
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.get('/:id', isAuth, validator(questValidation.getOne), questController.getOne);
+router.get(
+  '/:id',
+  isAuth,
+  validator(questValidation.getOne),
+  questController.getOne,
+);
+
+/**
+ * PATCH /api/quest/{id}
+ * @summary 更新耗用時間
+ * @tags quest
+ * @security apiKeyAuth
+ * @param {string} id.path.required - questId
+ * @param {updatedConsumed} request.body.required
+ * @return {object} 200 - success response - application/json
+ * @return {object} 400 - Bad request response
+ */
+router.patch(
+  '/:id',
+  isAuth,
+  validator(questValidation.updatedConsumed),
+  questController.updatedConsumed,
+);
 
 /**
  * DELETE /api/quest/{id}
@@ -51,9 +83,15 @@ router.get('/:id', isAuth, validator(questValidation.getOne), questController.ge
  * @tags quest
  * @security apiKeyAuth
  * @param {string} id.path.required - propId
+ * @param {}
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.delete('/:id', isAuth, validator(questValidation.deleteOne), questController.deleteOne);
+router.delete(
+  '/:id',
+  isAuth,
+  validator(questValidation.deleteOne),
+  questController.deleteOne,
+);
 
 module.exports = router;

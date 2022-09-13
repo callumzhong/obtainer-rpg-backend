@@ -18,17 +18,23 @@ const isAuth = catchAsync(async (req, res, next) => {
   }
 
   // 驗證 token 正確性
-  return jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-    if (err) {
-      throw new AppError(400, '令牌不合法');
-    }
-    const currentUser = await userService.getOne(decoded.id);
-    if (!currentUser) {
-      throw new AppError(400, '用戶不存在或權限到期');
-    }
-    req.user = currentUser;
-    next();
-  });
+  return jwt.verify(
+    token,
+    process.env.JWT_SECRET,
+    async (err, decoded) => {
+      if (err) {
+        throw new AppError(400, '令牌不合法');
+      }
+      const currentUser = await userService.getOne(
+        decoded._id,
+      );
+      if (!currentUser) {
+        throw new AppError(400, '用戶不存在或權限到期');
+      }
+      req.user = currentUser;
+      next();
+    },
+  );
 });
 
 module.exports = isAuth;
