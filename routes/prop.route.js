@@ -7,8 +7,9 @@ const isAuth = require('../middlewares/isAuth');
 const router = express.Router();
 
 /**
- * @typedef {object} effect
- * @property {number} str
+ * @typedef {object} attributes
+ * @property {number} satiety
+ * @property {number} mood
  */
 
 /**
@@ -23,7 +24,7 @@ const router = express.Router();
  * @property {string} name
  * @property {string} url
  * @property {string} description
- * @property {effect} effect
+ * @property {attributes} attributes
  */
 
 /**
@@ -35,7 +36,11 @@ const router = express.Router();
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.post('/', isAuth, validator(propValidation.create), propController.create);
+router.post(
+  '/',
+  validator(propValidation.create),
+  propController.create,
+);
 
 /**
  * GET /api/prop/{id}
@@ -46,7 +51,12 @@ router.post('/', isAuth, validator(propValidation.create), propController.create
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
-router.get('/:id', isAuth, validator(propValidation.getOne), propController.getOne);
+router.get(
+  '/:id',
+  isAuth,
+  validator(propValidation.getOne),
+  propController.getOne,
+);
 
 /**
  * PATCH /api/prop/formula/{id}

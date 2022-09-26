@@ -8,9 +8,11 @@ const create = async ({
   url,
   attributes,
 }) => {
-  const isMax = (await Character.find({ user: userId }).count()) >= 3;
-  if (isMax) {
-    throw new AppError(400, '人物欄位不足');
+  const isNotNull = await Character.find({
+    user: userId,
+  }).count();
+  if (isNotNull) {
+    throw new AppError(400, '帳號已存在角色');
   }
   await checkForDuplication(Character, [{ name }]);
   const character = await Character.create({

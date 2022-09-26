@@ -14,7 +14,7 @@ const questSchema = new mongoose.Schema(
     notionKey: {
       type: String,
       required: [
-        function () {
+        function check() {
           return this.type === 'NOTION';
         },
         '請輸入 notion key',

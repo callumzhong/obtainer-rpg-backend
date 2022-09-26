@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-const effectSchema = require('./subdocuments/effect.schema');
+const attributesSchema = require('./subdocuments/attributes.schema');
 
 const propSchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      enum: ['KEY', 'ARM'],
+      enum: ['DISH', 'ACTIVITY', 'LUXURY'],
     },
     name: {
       type: String,
@@ -20,15 +20,10 @@ const propSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    effect: effectSchema,
-    formula: [
-      {
-        material: { type: mongoose.Types.ObjectId, ref: 'material' },
-        amount: {
-          type: Number,
-        },
-      },
-    ],
+    attributes: {
+      type: attributesSchema,
+      required: [true, '請輸入屬性'],
+    },
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
   },

@@ -9,14 +9,15 @@ const getAll = catchAsync(async (req, res) => {
   );
 
   // if (type === 'material') {
-  const materials = await inventoryService.getAllMaterial({
+  const inventory = await inventoryService.getInventoryByCharacter({
+    type,
     characterId: character._id.toString(),
   });
   // }
 
-  console.log(materials);
+  console.log(inventory);
 
-  res.status(200).json(materials);
+  res.status(200).json(inventory);
 });
 
 module.exports = { getAll };

@@ -39,6 +39,7 @@ const collectOne = async ({ type, characterId }) => {
   }
 
   return {
+    type: material.type,
     name: material.name,
     amount: collectedAmount,
   };

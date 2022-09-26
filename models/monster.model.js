@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const coinSchema = require('./subdocuments/coin.schema');
 
 const monsterSchema = new mongoose.Schema(
   {
@@ -21,7 +20,10 @@ const monsterSchema = new mongoose.Schema(
     },
     drops: [
       {
-        material: { type: mongoose.Types.ObjectId, ref: 'material' },
+        material: {
+          type: mongoose.Types.ObjectId,
+          ref: 'material',
+        },
         min: {
           type: Number,
           default: 1,
@@ -32,7 +34,6 @@ const monsterSchema = new mongoose.Schema(
         },
       },
     ],
-    coin: coinSchema,
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
   },

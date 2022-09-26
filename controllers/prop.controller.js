@@ -3,7 +3,11 @@ const catchAsync = require('../helpers/catchAsync');
 
 const create = catchAsync(async (req, res) => {
   const {
-    type, name, url, description, effect,
+    type,
+    name,
+    url,
+    description,
+    attributes,
   } = req.body;
 
   const prop = await propService.create({
@@ -11,7 +15,7 @@ const create = catchAsync(async (req, res) => {
     name,
     url,
     description,
-    effect,
+    attributes,
   });
   res.status(201).json(prop);
 });
@@ -30,7 +34,10 @@ const getOne = catchAsync(async (req, res) => {
 const updatePropFormula = catchAsync(async (req, res) => {
   const { id } = req.params;
   const formula = req.body;
-  const prop = await propService.updatePropFormula({ propId: id, formula });
+  const prop = await propService.updatePropFormula({
+    propId: id,
+    formula,
+  });
   res.status(200).json(prop);
 });
 

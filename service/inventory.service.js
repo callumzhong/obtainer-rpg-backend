@@ -1,7 +1,7 @@
 const Inventory = require('../models/inventory.model');
 const materialService = require('./material.service');
 
-const getAllMaterial = async ({ characterId }) => {
+const getInventoryByCharacter = async ({ characterId }) => {
   const materials = await materialService.getAll();
   const materialInventory = await Inventory.find({
     character: characterId,
@@ -30,5 +30,5 @@ const getAllMaterial = async ({ characterId }) => {
 };
 
 module.exports = {
-  getAllMaterial,
+  getInventoryByCharacter,
 };

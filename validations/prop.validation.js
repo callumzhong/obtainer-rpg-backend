@@ -3,12 +3,15 @@ const validations = require('../helpers/validations');
 
 const create = {
   body: Joi.object({
-    type: Joi.string().valid('KEY', 'ARM').required(),
+    type: Joi.string()
+      .valid('DISH', 'ACTIVITY', 'LUXURY')
+      .required(),
     name: Joi.string().max(20).required(),
     url: Joi.string().required(),
     description: Joi.string().required(),
-    effect: Joi.object({
-      str: Joi.number(),
+    attributes: Joi.object({
+      satiety: Joi.number(),
+      mood: Joi.number(),
     }),
   }).required(),
 };

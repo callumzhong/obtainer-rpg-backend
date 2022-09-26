@@ -8,9 +8,8 @@ const create = catchAsync(async (req, res) => {
     name,
     url: 'https://res.cloudinary.com/callumzhong/image/upload/v1660942761/character_rojwo3.png',
     attributes: {
-      str: 5,
-      crit: 4,
-      speed: 1,
+      satiety: 500,
+      mood: 500,
     },
   });
   res.status(200).json(character);

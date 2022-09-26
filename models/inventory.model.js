@@ -11,7 +11,7 @@ const inventorySchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'prop',
       required: [
-        function () {
+        function check() {
           return !this.material;
         },
         '請輸入道具 || 素材',
@@ -21,7 +21,7 @@ const inventorySchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: 'material',
       required: [
-        function () {
+        function check() {
           return !this.prop;
         },
         '請輸入道具 || 素材',

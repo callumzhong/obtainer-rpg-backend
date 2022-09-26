@@ -1,17 +1,13 @@
 const mongoose = require('mongoose');
 
 const attributesSchema = new mongoose.Schema({
-  str: {
+  satiety: {
     type: Number,
-    required: [true, '請輸入攻擊值'],
+    required: [true, '請輸入飽食值'],
   },
-  crit: {
+  mood: {
     type: Number,
-    required: [true, '請輸入爆擊值'],
-  },
-  speed: {
-    type: Number,
-    required: [true, '請輸入速度值'],
+    required: [true, '請輸入情緒值'],
   },
 });
 

@@ -10,7 +10,11 @@ const getOne = async (propId) => {
 };
 
 const create = async ({
-  type, name, url, description, effect,
+  type,
+  name,
+  url,
+  description,
+  attributes,
 }) => {
   const model = {
     type,
@@ -18,8 +22,8 @@ const create = async ({
     url,
     description,
   };
-  if (effect) {
-    model.effect = effect;
+  if (attributes) {
+    model.attributes = attributes;
   }
 
   const prop = await Prop.create(model);

@@ -1,21 +1,6 @@
 const mongoose = require('mongoose');
 const attributesSchema = require('./subdocuments/attributes.schema');
 
-/**
- * 經驗值採用 subdocuments
- * 未來使用經驗加倍券等狀況
- */
-const experienceSchema = new mongoose.Schema({
-  current: {
-    type: Number,
-    default: 0,
-  },
-  next: {
-    type: Number,
-    default: 50,
-  },
-});
-
 const characterSchema = new mongoose.Schema(
   {
     user: {
@@ -34,25 +19,9 @@ const characterSchema = new mongoose.Schema(
       type: String,
       required: [true, '請輸入圖檔'],
     },
-    level: {
-      type: Number,
-      default: 1,
-    },
-    experience: {
-      type: experienceSchema,
-      default: () => ({}),
-    },
     attributes: {
       type: attributesSchema,
       required: [true, '請輸入屬性'],
-    },
-    coin: {
-      type: Number,
-      default: 0,
-    },
-    inventoryUpperLimit: {
-      type: Number,
-      default: 24,
     },
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
@@ -69,6 +38,9 @@ characterSchema.virtual('inventory', {
   localField: '_id',
 });
 
-const Character = mongoose.model('Character', characterSchema);
+const Character = mongoose.model(
+  'Character',
+  characterSchema,
+);
 
 module.exports = Character;
