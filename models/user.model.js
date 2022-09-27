@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
     characters: [
       {
         type: mongoose.Types.ObjectId,
-        ref: 'character',
+        ref: 'Character',
       },
     ],
     createdAt: { type: Date, select: false },

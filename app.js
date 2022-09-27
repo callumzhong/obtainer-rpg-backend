@@ -43,7 +43,6 @@ app.use((req, res) => {
 });
 
 app.use(errorHandler);
-
 process.on('unhandledRejection', (err, promise) => {
   console.error(
     '未捕捉到的 rejection：',

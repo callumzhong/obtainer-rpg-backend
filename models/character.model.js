@@ -5,7 +5,7 @@ const characterSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
       required: [true, '請輸入用戶'],
     },
     name: {
@@ -33,7 +33,7 @@ const characterSchema = new mongoose.Schema(
 );
 
 characterSchema.virtual('inventory', {
-  ref: 'inventory',
+  ref: 'Inventory',
   foreignField: 'character',
   localField: '_id',
 });

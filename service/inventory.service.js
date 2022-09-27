@@ -2,6 +2,7 @@ const Inventory = require('../models/inventory.model');
 const materialService = require('./material.service');
 const propService = require('./prop.service');
 const getRandomNumber = require('../helpers/getRandomNumber');
+const AppError = require('../helpers/appError');
 
 const getInventoryByMaterial = async ({ characterId }) => {
   const materials = await materialService.getAll();
@@ -14,12 +15,12 @@ const getInventoryByMaterial = async ({ characterId }) => {
 
   const inventory = materials.reduce((prev, curr) => {
     const existed = materialInventory.find(
-      (item) => item.material._id.toString()
-        === curr._id.toString(),
+      (item) => item.material.toString() === curr._id.toString(),
     );
     return [
       ...prev,
       {
+        _id: curr._id,
         type: curr.type,
         name: curr.name,
         url: curr.url,
@@ -39,12 +40,15 @@ const getInventoryByProp = async ({ characterId }) => {
       $exists: true,
     },
   });
+  console.log(propInventory);
 
   const inventory = props
     .reduce((prev, curr) => {
+      console.log(curr);
       const existed = propInventory.find(
-        (item) => item.prop._id.toString() === curr._id.toString(),
+        (item) => item.prop.toString() === curr._id.toString(),
       );
+      console.log(existed);
       return [
         ...prev,
         {
@@ -106,7 +110,53 @@ const addProp = async ({ propId, characterId }) => {
   return prop;
 };
 
+const reduceProp = async ({ propId, characterId }) => {
+  const existedProp = await Inventory.findOne({
+    prop: propId,
+    character: characterId,
+  }).populate({
+    path: 'prop',
+  });
+
+  if (!existedProp || existedProp.amount <= 0) {
+    throw new AppError(400, '角色未擁有此道具');
+  }
+
+  existedProp.amount -= 1;
+  await existedProp.save();
+  return `已使用${existedProp.prop.name}`;
+};
+
 const getGashaponProp = async ({ characterId }) => {
+  const materials = await getInventoryByMaterial({
+    characterId,
+  });
+
+  const errorMessage = materials.reduce((str, material) => {
+    let temp = str;
+    if (material.amount < 50) {
+      temp
+        += temp.length > 0
+          ? `, 缺少${material.name}`
+          : `缺少${material.name}`;
+    }
+    return temp;
+  }, '');
+
+  if (errorMessage) {
+    throw new AppError(409, errorMessage);
+  }
+
+  materials.forEach(async (material) => {
+    const temp = await Inventory.findOne({
+      character: characterId,
+      material: material._id.toString(),
+    });
+    temp.amount -= 50;
+    temp.markModified('amount');
+    await temp.save();
+  });
+
   let probability = new Array(100).fill(null);
   probability.fill('DISH', 0, 70);
   probability.fill('ACTIVITY', 70, 95);
@@ -171,4 +221,5 @@ module.exports = {
   getInventoryByMaterial,
   getInventoryByProp,
   getGashaponProp,
+  reduceProp,
 };

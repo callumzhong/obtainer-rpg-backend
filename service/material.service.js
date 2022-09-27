@@ -26,7 +26,7 @@ const collectOne = async ({ type, characterId }) => {
     material: material.id,
     character: characterId,
   });
-  const collectedAmount = getRandomNumber(2, 12);
+  const collectedAmount = getRandomNumber(5, 30);
   if (existedMaterial) {
     existedMaterial.amount += collectedAmount;
     await existedMaterial.save();

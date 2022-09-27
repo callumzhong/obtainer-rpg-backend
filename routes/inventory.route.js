@@ -7,6 +7,11 @@ const isAuth = require('../middlewares/isAuth');
 const router = express.Router();
 
 /**
+ * @typedef {object} reduceProp
+ * @property {string} propId
+ */
+
+/**
  * GET /api/inventory
  * @summary 取得物品欄資料
  * @security apiKeyAuth
@@ -33,6 +38,21 @@ router.get(
   '/gashapon',
   isAuth,
   inventoryController.getGashaponProp,
+);
+/**
+ * POST /api/inventory/use_prop
+ * @summary 使用道具
+ * @security apiKeyAuth
+ * @tags inventory
+ * @param {reduceProp} request.body.required
+ * @return {object} 200 - success response - application/json
+ * @return {object} 400 - Bad request response
+ */
+router.post(
+  '/use_prop',
+  isAuth,
+  validator(inventoryValidation.reduceProp),
+  inventoryController.reduceProp,
 );
 
 module.exports = router;

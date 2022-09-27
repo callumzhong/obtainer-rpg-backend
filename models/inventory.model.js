@@ -4,12 +4,12 @@ const inventorySchema = new mongoose.Schema(
   {
     character: {
       type: mongoose.Types.ObjectId,
-      ref: 'character',
+      ref: 'Character',
       required: [true, '請輸入角色ID'],
     },
     prop: {
       type: mongoose.Types.ObjectId,
-      ref: 'prop',
+      ref: 'Prop',
       required: [
         function check() {
           return !this.material;
@@ -19,7 +19,7 @@ const inventorySchema = new mongoose.Schema(
     },
     material: {
       type: mongoose.Types.ObjectId,
-      ref: 'material',
+      ref: 'Material',
       required: [
         function check() {
           return !this.prop;

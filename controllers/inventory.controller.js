@@ -27,10 +27,23 @@ const getGashaponProp = catchAsync(async (req, res) => {
   const character = await characterService.getOne(
     req.user._id.toString(),
   );
-  const test = await inventoryService.getGashaponProp({
+  const gashapon = await inventoryService.getGashaponProp({
     characterId: character._id.toString(),
   });
-  res.status(200).json(test);
+  res.status(200).json(gashapon ? gashapon.name : '未中獎');
 });
 
-module.exports = { getAll, getGashaponProp };
+const reduceProp = catchAsync(async (req, res) => {
+  const { propId } = req.body;
+
+  const character = await characterService.getOne(
+    req.user._id.toString(),
+  );
+  const result = await inventoryService.reduceProp({
+    propId,
+    characterId: character._id.toString(),
+  });
+  res.status(200).json(result);
+});
+
+module.exports = { getAll, getGashaponProp, reduceProp };
