@@ -15,23 +15,23 @@ const create = async ({
   url,
   description,
   attributes,
+  dropRate,
 }) => {
   const model = {
     type,
     name,
     url,
     description,
+    dropRate,
+    attributes,
   };
-  if (attributes) {
-    model.attributes = attributes;
-  }
 
   const prop = await Prop.create(model);
   return prop;
 };
 
-const getAll = async () => {
-  const props = await Prop.find().lean();
+const getAll = async (search = {}) => {
+  const props = await Prop.find(search).lean();
   return props;
 };
 

@@ -8,6 +8,7 @@ const create = catchAsync(async (req, res) => {
     url,
     description,
     attributes,
+    dropRate,
   } = req.body;
 
   const prop = await propService.create({
@@ -16,6 +17,7 @@ const create = catchAsync(async (req, res) => {
     url,
     description,
     attributes,
+    dropRate,
   });
   res.status(201).json(prop);
 });

@@ -9,6 +9,7 @@ const create = {
     name: Joi.string().max(20).required(),
     url: Joi.string().required(),
     description: Joi.string().required(),
+    dropRate: Joi.number().required(),
     attributes: Joi.object({
       satiety: Joi.number(),
       mood: Joi.number(),

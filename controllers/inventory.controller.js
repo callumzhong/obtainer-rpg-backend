@@ -8,16 +8,29 @@ const getAll = catchAsync(async (req, res) => {
     req.user._id.toString(),
   );
 
-  // if (type === 'material') {
-  const inventory = await inventoryService.getInventoryByCharacter({
-    type,
-    characterId: character._id.toString(),
-  });
-  // }
-
-  console.log(inventory);
+  let inventory = [];
+  if (type === 'MATERIAL') {
+    inventory = await inventoryService.getInventoryByMaterial({
+      characterId: character._id.toString(),
+    });
+  }
+  if (type === 'PROP') {
+    inventory = await inventoryService.getInventoryByProp({
+      characterId: character._id.toString(),
+    });
+  }
 
   res.status(200).json(inventory);
 });
 
-module.exports = { getAll };
+const getGashaponProp = catchAsync(async (req, res) => {
+  const character = await characterService.getOne(
+    req.user._id.toString(),
+  );
+  const test = await inventoryService.getGashaponProp({
+    characterId: character._id.toString(),
+  });
+  res.status(200).json(test);
+});
+
+module.exports = { getAll, getGashaponProp };

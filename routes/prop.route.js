@@ -24,6 +24,7 @@ const router = express.Router();
  * @property {string} name
  * @property {string} url
  * @property {string} description
+ * @property {number} dropRate
  * @property {attributes} attributes
  */
 

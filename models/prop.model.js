@@ -24,6 +24,10 @@ const propSchema = new mongoose.Schema(
       type: attributesSchema,
       required: [true, '請輸入屬性'],
     },
+    dropRate: {
+      type: Number,
+      required: [true, '請輸入掉落機率'],
+    },
     createdAt: { type: Date, select: false },
     updatedAt: { type: Date, select: false },
   },
