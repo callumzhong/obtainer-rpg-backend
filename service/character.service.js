@@ -59,6 +59,30 @@ const getOne = async (userId) => {
   return character;
 };
 
+const updateAttributes = async (
+  characterId,
+  attributes,
+) => {
+  const temp = attributes;
+  Object.keys(attributes).forEach((key) => {
+    temp[key] = attributes[key] <= 0 ? 0 : attributes[key];
+  });
+  const character = await Character.findByIdAndUpdate(
+    characterId,
+    {
+      $set: {
+        attributes: temp,
+      },
+    },
+  );
+
+  if (!character) {
+    throw new AppError(400, '人物不存在');
+  }
+
+  return character;
+};
+
 // const getOne = async () => {
 //   const character = await Character.findById().lean().populate('inventory');
 //   return character;
@@ -69,4 +93,5 @@ module.exports = {
   deleteOne,
   updatedName,
   getOne,
+  updateAttributes,
 };

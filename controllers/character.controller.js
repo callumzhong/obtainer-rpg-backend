@@ -39,9 +39,20 @@ const updatedName = catchAsync(async (req, res) => {
   res.status(200).json(character);
 });
 
+const updateAttributes = catchAsync(async (req, res) => {
+  const { id: characterId } = req.params;
+  const attributes = req.body;
+  const character = await characterService.updateAttributes(
+    characterId,
+    attributes,
+  );
+  res.status(200).json(character);
+});
+
 module.exports = {
   create,
   getOne,
   deleteOne,
   updatedName,
+  updateAttributes,
 };

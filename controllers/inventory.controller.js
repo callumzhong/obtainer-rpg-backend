@@ -41,7 +41,7 @@ const reduceProp = catchAsync(async (req, res) => {
   );
   const result = await inventoryService.reduceProp({
     propId,
-    characterId: character._id.toString(),
+    character,
   });
   res.status(200).json(result);
 });

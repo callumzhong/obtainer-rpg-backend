@@ -28,8 +28,19 @@ const updatedName = {
   }).required(),
 };
 
+const updateAttributes = {
+  params: Joi.object({
+    id: validations.JoiObjectId().required(),
+  }),
+  body: Joi.object({
+    satiety: Joi.number().required(),
+    mood: Joi.number().required(),
+  }).required(),
+};
+
 module.exports = {
   create,
   deleteOne,
   updatedName,
+  updateAttributes,
 };

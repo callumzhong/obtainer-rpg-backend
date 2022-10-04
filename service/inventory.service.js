@@ -1,5 +1,6 @@
 const Inventory = require('../models/inventory.model');
 const materialService = require('./material.service');
+const characterService = require('./character.service');
 const propService = require('./prop.service');
 const getRandomNumber = require('../helpers/getRandomNumber');
 const AppError = require('../helpers/appError');
@@ -40,15 +41,12 @@ const getInventoryByProp = async ({ characterId }) => {
       $exists: true,
     },
   });
-  console.log(propInventory);
 
   const inventory = props
     .reduce((prev, curr) => {
-      console.log(curr);
       const existed = propInventory.find(
         (item) => item.prop.toString() === curr._id.toString(),
       );
-      console.log(existed);
       return [
         ...prev,
         {
@@ -110,7 +108,9 @@ const addProp = async ({ propId, characterId }) => {
   return prop;
 };
 
-const reduceProp = async ({ propId, characterId }) => {
+const reduceProp = async ({ propId, character }) => {
+  const characterId = character._id.toString();
+  const { attributes: characterAttributes } = character;
   const existedProp = await Inventory.findOne({
     prop: propId,
     character: characterId,
@@ -121,7 +121,24 @@ const reduceProp = async ({ propId, characterId }) => {
   if (!existedProp || existedProp.amount <= 0) {
     throw new AppError(400, '角色未擁有此道具');
   }
+  const { attributes } = existedProp.prop;
 
+  ['satiety', 'mood'].forEach((key) => {
+    const total = attributes[key] + characterAttributes[key];
+    if (key === 'satiety' && total >= 300) {
+      attributes[key] = 300;
+      return;
+    }
+    if (key === 'mood' && total >= 100) {
+      attributes[key] = 100;
+      return;
+    }
+    attributes[key] = total;
+  });
+  await characterService.updateAttributes(
+    characterId,
+    attributes,
+  );
   existedProp.amount -= 1;
   await existedProp.save();
   return `已使用${existedProp.prop.name}`;

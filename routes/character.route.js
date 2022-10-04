@@ -21,8 +21,9 @@ const router = express.Router();
  */
 
 /**
- * @typedef {object} updatedName
- * @property {string} name.required
+ * @typedef {object} updateAttributes
+ * @property {string} satiety.required
+ * @property {string} mood.required
  */
 
 /**
@@ -67,21 +68,38 @@ router.delete(
   characterController.deleteOne,
 );
 
+// /**
+//  * PATCH /api/character/{id}
+//  * @summary 重新命名
+//  * @tags character
+//  * @security apiKeyAuth
+//  * @param {string} id.path.required - characterId
+//  * @param {updatedName} request.body.required
+//  * @return {object} 200 - success response - application/json
+//  * @return {object} 400 - Bad request response
+//  */
+// router.patch(
+//   '/:id',
+//   isAuth,
+//   validator(characterValidation.updatedName),
+//   characterController.updatedName,
+// );
+
 /**
  * PATCH /api/character/{id}
- * @summary 重新命名
+ * @summary 更新屬性
  * @tags character
  * @security apiKeyAuth
  * @param {string} id.path.required - characterId
- * @param {updatedName} request.body.required
+ * @param {updateAttributes} request.body.required
  * @return {object} 200 - success response - application/json
  * @return {object} 400 - Bad request response
  */
 router.patch(
   '/:id',
   isAuth,
-  validator(characterValidation.updatedName),
-  characterController.updatedName,
+  validator(characterValidation.updateAttributes),
+  characterController.updateAttributes,
 );
 
 module.exports = router;
