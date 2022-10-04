@@ -30,7 +30,13 @@ const getGashaponProp = catchAsync(async (req, res) => {
   const gashapon = await inventoryService.getGashaponProp({
     characterId: character._id.toString(),
   });
-  res.status(200).json(gashapon ? gashapon.name : '未中獎');
+  res
+    .status(200)
+    .json(
+      gashapon
+        ? { name: gashapon.name, url: gashapon.url }
+        : { name: '未中獎' },
+    );
 });
 
 const reduceProp = catchAsync(async (req, res) => {
