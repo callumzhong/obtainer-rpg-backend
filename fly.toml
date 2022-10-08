@@ -1,4 +1,4 @@
-# fly.toml file generated for api-forest-rpg on 2022-10-04T05:25:20+08:00
+# fly.toml file generated for api-forest-rpg on 2022-10-08T14:13:07+08:00
 
 app = "api-forest-rpg"
 kill_signal = "SIGINT"
@@ -16,7 +16,7 @@ processes = []
   MONGO_PASSWORD="qaz123wsx456"
   JWT_SECRET="8xc&|iE{W+$6t2h2|l5Q%C*5m?+%|tMF]k!Pv{:H{JPgmn=_2ef7h<hrM-o4x[H;"
   JWT_EXPIRES_DAY="7d"
-
+  
 [experimental]
   allowed_public_ports = []
   auto_rollback = true

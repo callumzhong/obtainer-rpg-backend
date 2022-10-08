@@ -18,7 +18,6 @@ const indexRouter = require('./routes/index');
 
 const app = express();
 expressJSDocSwagger(app)(swaggerOptions);
-
 if (process.env.NODE_ENV === 'dev') {
   process.on('uncaughtException', (err) => {
     console.error('Uncaughted Exception！');
@@ -26,7 +25,6 @@ if (process.env.NODE_ENV === 'dev') {
     process.exit(1);
   });
 }
-
 app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
@@ -43,6 +41,7 @@ app.use((req, res) => {
 });
 
 app.use(errorHandler);
+
 process.on('unhandledRejection', (err, promise) => {
   console.error(
     '未捕捉到的 rejection：',
