@@ -8,8 +8,8 @@ const create = catchAsync(async (req, res) => {
     name,
     url: 'https://res.cloudinary.com/callumzhong/image/upload/v1660942761/character_rojwo3.png',
     attributes: {
-      satiety: 500,
-      mood: 500,
+      satiety: 300,
+      mood: 100,
     },
   });
   res.status(200).json(character);
@@ -49,10 +49,17 @@ const updateAttributes = catchAsync(async (req, res) => {
   res.status(200).json(character);
 });
 
+const updateDeath = catchAsync(async (req, res) => {
+  const { id: characterId } = req.params;
+  await characterService.updateDeath(characterId);
+  res.status(200).send('已清空資料');
+});
+
 module.exports = {
   create,
   getOne,
   deleteOne,
   updatedName,
   updateAttributes,
+  updateDeath,
 };

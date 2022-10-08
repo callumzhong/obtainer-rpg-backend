@@ -234,9 +234,14 @@ const getGashaponProp = async ({ characterId }) => {
   return result;
 };
 
+const deleteInventoryCharacter = async (characterId) => {
+  await Inventory.deleteMany({ character: characterId });
+};
+
 module.exports = {
   getInventoryByMaterial,
   getInventoryByProp,
   getGashaponProp,
   reduceProp,
+  deleteInventoryCharacter,
 };

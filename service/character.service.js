@@ -1,6 +1,7 @@
 const Character = require('../models/character.model');
 const checkForDuplication = require('../helpers/checkForDuplication');
 const AppError = require('../helpers/appError');
+const inventoryService = require('./inventory.service');
 
 const create = async ({
   userId,
@@ -52,7 +53,7 @@ const updatedName = async ({ characterId, name }) => {
 const getOne = async (userId) => {
   const character = await Character.findOne({
     user: userId,
-  });
+  }).select('+updatedAt');
   if (!character) {
     throw new AppError(400, '人物不存在');
   }
@@ -83,6 +84,20 @@ const updateAttributes = async (
   return character;
 };
 
+const updateDeath = async (characterId) => {
+  const character = await Character.findById(characterId);
+  if (!character) {
+    throw new AppError(400, '人物不存在');
+  }
+  await inventoryService.deleteInventoryCharacter(
+    characterId,
+  );
+  await updateAttributes(characterId, {
+    satiety: 300,
+    mood: 100,
+  });
+};
+
 // const getOne = async () => {
 //   const character = await Character.findById().lean().populate('inventory');
 //   return character;
@@ -94,4 +109,5 @@ module.exports = {
   updatedName,
   getOne,
   updateAttributes,
+  updateDeath,
 };

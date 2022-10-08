@@ -102,4 +102,20 @@ router.patch(
   characterController.updateAttributes,
 );
 
+/**
+ * DELETE /api/character/death/{id}
+ * @summary 角色死亡
+ * @tags character
+ * @security apiKeyAuth
+ * @param {string} id.path.required - characterId
+ * @return {object} 200 - success response - application/json
+ * @return {object} 400 - Bad request response
+ */
+router.delete(
+  '/death/:id',
+  isAuth,
+  validator(characterValidation.updateDeath),
+  characterController.updateDeath,
+);
+
 module.exports = router;

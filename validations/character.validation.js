@@ -19,6 +19,12 @@ const deleteOne = {
   }).required(),
 };
 
+const updateDeath = {
+  params: Joi.object({
+    id: validations.JoiObjectId().required(),
+  }).required(),
+};
+
 const updatedName = {
   params: Joi.object({
     id: validations.JoiObjectId().required(),
@@ -43,4 +49,5 @@ module.exports = {
   deleteOne,
   updatedName,
   updateAttributes,
+  updateDeath,
 };
