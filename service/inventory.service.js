@@ -1,6 +1,5 @@
 const Inventory = require('../models/inventory.model');
 const materialService = require('./material.service');
-const characterService = require('./character.service');
 const propService = require('./prop.service');
 const getRandomNumber = require('../helpers/getRandomNumber');
 const AppError = require('../helpers/appError');
@@ -135,13 +134,12 @@ const reduceProp = async ({ propId, character }) => {
     }
     attributes[key] = total;
   });
-  await characterService.updateAttributes(
-    characterId,
-    attributes,
-  );
   existedProp.amount -= 1;
   await existedProp.save();
-  return `已使用${existedProp.prop.name}`;
+  return {
+    result: `已使用${existedProp.prop.name}`,
+    attributes,
+  };
 };
 
 const getGashaponProp = async ({ characterId }) => {

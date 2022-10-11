@@ -45,10 +45,14 @@ const reduceProp = catchAsync(async (req, res) => {
   const character = await characterService.getOne(
     req.user._id.toString(),
   );
-  const result = await inventoryService.reduceProp({
+  const { result, attributes } = await inventoryService.reduceProp({
     propId,
     character,
   });
+  await characterService.updateAttributes(
+    character._id.toString(),
+    attributes,
+  );
   res.status(200).json(result);
 });
 

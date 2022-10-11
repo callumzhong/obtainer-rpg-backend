@@ -98,11 +98,6 @@ const updateDeath = async (characterId) => {
   });
 };
 
-// const getOne = async () => {
-//   const character = await Character.findById().lean().populate('inventory');
-//   return character;
-// };
-
 module.exports = {
   create,
   deleteOne,
